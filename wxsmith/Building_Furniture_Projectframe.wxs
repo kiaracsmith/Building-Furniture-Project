@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wxsmith>
+	<object class="wxFrame" name="Building_Furniture_ProjectFrame">
+		<size>552,312</size>
+		<bg>wxSYS_COLOUR_WINDOW</bg>
+		<id_arg>0</id_arg>
+		<style>wxDEFAULT_FRAME_STYLE|wxRESIZE_BORDER|wxMAXIMIZE_BOX</style>
+		<handler function="OnClose" entry="EVT_CLOSE" />
+		<object class="wxStaticBox" name="ID_STATICBOX3" variable="StaticBox3" member="yes">
+			<label>Preview</label>
+			<pos>280,8</pos>
+			<size>256,264</size>
+		</object>
+		<object class="wxStaticBox" name="ID_STATICBOX1" variable="StaticBox1" member="yes">
+			<label>Design</label>
+			<pos>8,8</pos>
+			<size>256,96</size>
+		</object>
+		<object class="wxButton" name="ID_BUTTON1" variable="Button1" member="yes">
+			<label>Submit</label>
+			<pos>8,280</pos>
+			<size>256,23</size>
+			<enabled>0</enabled>
+			<handler function="OnButton1Click" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT1" variable="StaticText1" member="yes">
+			<label>Unit</label>
+			<pos>24,40</pos>
+		</object>
+		<object class="wxChoice" name="ID_CHOICE1" variable="Choice1" member="yes">
+			<content>
+				<item>Floor Unit</item>
+			</content>
+			<pos>72,32</pos>
+			<size>170,23</size>
+			<handler function="OnChoice1Select" entry="EVT_CHOICE" />
+		</object>
+		<object class="wxChoice" name="ID_CHOICE2" variable="Choice2" member="yes">
+			<pos>72,64</pos>
+			<size>170,23</size>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT2" variable="StaticText2" member="yes">
+			<label>Type</label>
+			<pos>24,72</pos>
+		</object>
+		<object class="wxStaticBox" name="ID_STATICBOX2" variable="StaticBox2" member="yes">
+			<label>Dimensions [mm]</label>
+			<pos>8,120</pos>
+			<size>256,152</size>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT3" variable="StaticText3" member="yes">
+			<label>Width</label>
+			<pos>24,152</pos>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT4" variable="StaticText4" member="yes">
+			<label>Height</label>
+			<pos>24,184</pos>
+		</object>
+		<object class="wxSpinCtrl" name="ID_SPINCTRL1" variable="SpinCtrl1" member="yes">
+			<value>500</value>
+			<max>10000</max>
+			<pos>72,144</pos>
+			<size>170,23</size>
+			<handler function="OnSpinCtrl1Change" entry="EVT_SPINCTRL" />
+		</object>
+		<object class="wxSpinCtrl" name="ID_SPINCTRL2" variable="SpinCtrl2" member="yes">
+			<value>700</value>
+			<max>10000</max>
+			<pos>72,176</pos>
+			<size>170,23</size>
+		</object>
+		<object class="wxSpinCtrl" name="ID_SPINCTRL3" variable="SpinCtrl3" member="yes">
+			<value>560</value>
+			<max>10000</max>
+			<pos>72,208</pos>
+			<size>170,23</size>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT5" variable="StaticText5" member="yes">
+			<label>Depth</label>
+			<pos>24,216</pos>
+		</object>
+		<object class="wxStaticLine" name="ID_STATICLINE1" variable="StaticLine1" member="yes">
+			<pos>272,8</pos>
+			<size>-1,290</size>
+		</object>
+		<object class="wxButton" name="ID_BUTTON2" variable="Button2" member="yes">
+			<label>Cutting List</label>
+			<pos>288,280</pos>
+			<size>248,23</size>
+		</object>
+		<object class="wxButton" name="ID_BUTTON3" variable="Button3" member="yes">
+			<label>Save Session</label>
+			<pos>296,232</pos>
+		</object>
+		<object class="wxButton" name="ID_BUTTON4" variable="Button4" member="yes">
+			<label>Clear</label>
+			<pos>400,232</pos>
+			<handler function="OnButton4Click" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxListBox" name="ID_LISTBOX1" variable="ListBox1" member="yes">
+			<default>-1</default>
+			<pos>296,32</pos>
+			<size>224,192</size>
+		</object>
+		<object class="wxButton" name="ID_BUTTON5" variable="Button5" member="yes">
+			<label>-</label>
+			<pos>488,232</pos>
+			<size>32,23</size>
+		</object>
+	</object>
+</wxsmith>
