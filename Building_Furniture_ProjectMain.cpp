@@ -115,14 +115,15 @@ Building_Furniture_ProjectFrame::Building_Furniture_ProjectFrame(wxWindow *paren
     Button4 = new wxButton(this, ID_BUTTON4, _("Clear"), wxPoint(400, 232), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON4"));
     ListBox1 = new wxListBox(this, ID_LISTBOX1, wxPoint(296, 32), wxSize(224, 192), 0, 0, 0, wxDefaultValidator, _T("ID_LISTBOX1"));
     Button5 = new wxButton(this, ID_BUTTON5, _("-"), wxPoint(488, 232), wxSize(32, 23), 0, wxDefaultValidator, _T("ID_BUTTON5"));
-    createDB(dir);
-    createTable(dir);
+
     Connect(ID_BUTTON1, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&Building_Furniture_ProjectFrame::OnButton1Click);
     Connect(ID_CHOICE1, wxEVT_COMMAND_CHOICE_SELECTED, (wxObjectEventFunction)&Building_Furniture_ProjectFrame::OnChoice1Select);
     Connect(ID_SPINCTRL1, wxEVT_COMMAND_SPINCTRL_UPDATED, (wxObjectEventFunction)&Building_Furniture_ProjectFrame::OnSpinCtrl1Change);
     Connect(ID_BUTTON4, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&Building_Furniture_ProjectFrame::OnButton4Click);
     Connect(wxID_ANY, wxEVT_CLOSE_WINDOW, (wxObjectEventFunction)&Building_Furniture_ProjectFrame::OnClose);
     //*)
+    createDB();
+    createTable();
 }
 
 Building_Furniture_ProjectFrame::~Building_Furniture_ProjectFrame()
@@ -152,13 +153,25 @@ void Building_Furniture_ProjectFrame::OnSpinCtrl1Change(wxSpinEvent &event)
 
 void Building_Furniture_ProjectFrame::OnButton1Click(wxCommandEvent &event)
 {
-    //Dimensions
+    // Valiables
+    // - Dimensions
     int H = SpinCtrl1->GetValue();
     int W = SpinCtrl2->GetValue();
     int D = SpinCtrl3->GetValue();
     int t = 16;
     int qty = 1;
-    std::string col = "White";
+    std::string color = "White";
+
+    // - Database Query
+    sqlite3 *db;
+    char *zErrMsg = 0;
+    int rc;
+    char *sql;
+
+    // - Command Definition
+
+    int UnitSelect = (int)Choice1->GetSelection();
+    int UnitType = (int)Choice2->GetSelection();
 
     if (!(H && W && D))
     {
@@ -166,13 +179,26 @@ void Building_Furniture_ProjectFrame::OnButton1Click(wxCommandEvent &event)
         return;
     }
 
-    int UnitSelect = Choice1->GetSelection();
-    int UnitType = Choice2->GetSelection();
-
-    if ((UnitType > -1) && (UnitType < 6))
+    rc = sqlite3_open(dir, &db);
+    if (rc)
     {
-        FloorUnit(1000, 750, 560, 16, "White", 1, 0);
-        ListBox1->Append("Test");
+        std::cout << zErrMsg << endl;
+        return;
+    }
+    else
+    {
+        cout << "Opened database successfully" << endl;
+    }
+    switch (UnitSelect)
+    {
+    case 0:
+    {
+        //Floor Unit
+        FloorUnit(W, H, D, t, color, 1, UnitType);
+        break;
+    }
+    default:
+        break;
     }
 }
 
@@ -207,11 +233,11 @@ void Building_Furniture_ProjectFrame::OnButton4Click(wxCommandEvent &event)
 
 /*
 =================================================================================
-                                Functions
+                                Unit Functions
 =================================================================================
 */
 
-void FloorUnit(int W, int H, int D, int t, std::string color, int n, int drawOpt)
+void FloorUnit(float W, float H, float D, int t, std::string color, int n, int drawOpt)
 {
     int x = 0, y = 0, z = 0;
     int grvBacking = 6;
@@ -219,6 +245,7 @@ void FloorUnit(int W, int H, int D, int t, std::string color, int n, int drawOpt
     int doorQty = 1;
     int grvRunner = 14;
 
+    string NAME = "Floor Unit - ";
     //Base Analysis
     x = W - t * 2;
     y = D;
@@ -257,36 +284,43 @@ void FloorUnit(int W, int H, int D, int t, std::string color, int n, int drawOpt
     x = W - t * 2;
     y = D - (t - grvBacking - 5) * 2;
     BOARD SHELF(x, y, t, color, n * 1);
+
     switch (drawOpt)
     {
     case 0:
         //No Draw
         {
+            NAME.append("No Draws");
             break;
         }
     case 1:
         //Two Draws     | 2 Equal Size
         {
+            NAME.append("Two Draws (2 Equal Sizes)");
             break;
         }
     case 2:
         //Three Draws   | 3 Equal Size
         {
+            NAME.append("Three Draws (3 Equal Sizes)");
             break;
         }
     case 3:
         //Three Draws   | 2 Equal Size
         {
+            NAME.append("Three Draws (2 Equal Sizes)");
             break;
         }
     case 4:
         //Three Draws   | 0 Equal Size
         {
+            NAME.append("Three Draws (0 Equal Sizes)");
             break;
         }
     case 5:
         //Four Draws    |  4 Equal Size
         {
+            NAME.append("Four Draws (4 Equal Sizes)");
             break;
         }
     default:
@@ -295,17 +329,14 @@ void FloorUnit(int W, int H, int D, int t, std::string color, int n, int drawOpt
     }
     }
 
-    BoardPrint("SIDE", SIDE);
-    BoardPrint("BASE", BASE);
-    BoardPrint("SIDE", SUPPORT);
-    BoardPrint("BACKING", BACKING);
-    BoardPrint("DOOR", DOOR);
-    BoardPrint("SHELF", SHELF);
-}
+    StoreUnit(NAME, W, H, D, color, n);
 
-void BoardPrint(std::string NAME, BOARD A)
-{
-    std::cout << NAME << "\t" << A.L << "\t" << A.W << "\t" << A.amount << "\n";
+    StoreBoard(NAME, "SIDE", SIDE);
+    StoreBoard(NAME, "BASE", BASE);
+    StoreBoard(NAME, "SIDE", SUPPORT);
+    StoreBoard(NAME, "BACKING", BACKING);
+    StoreBoard(NAME, "DOOR", DOOR);
+    StoreBoard(NAME, "SHELF", SHELF);
 }
 
 /*
@@ -313,82 +344,180 @@ void BoardPrint(std::string NAME, BOARD A)
                                 Database Handles
 =================================================================================
 */
-static int createDB(const char *s)
+
+/*
+Description:    Creates Database
+Input(s):       Database file directory
+Return:         0
+*/
+static int createDB()
 {
-    sqlite3 *DB;
+    sqlite3 *db;
     int exit = 0;
-    exit = sqlite3_open(s, &DB);
-    sqlite3_close(DB);
+
+    exit = sqlite3_open(dir, &db);
+    sqlite3_close(db);
     return 0;
 }
 
-static int createTable(const char *s)
+/*
+Description:    Creates Tables
+Input(s):       Database file directory
+Return:         0
+*/
+static int createTable()
 {
-    sqlite3 *DB;
-    std::string sql = "CREATE TABLE IF NOT EXIST UNITS(ID integer PRIMARY KEY AUTOINCREMENT, NAME TEXT NOT NULL);";
-    try
-    {
-        int exit = 0;
-        char *messageError;
-        exit = sqlite3_exec(DB, sql.c_str(), NULL, 0, &messageError);
+    // Variable Initilization
+    sqlite3 *db;
+    char *zErrMsg = 0;
+    int rc;
+    char *sql;
 
-        if (exit != SQLITE_OK)
-        {
-            cerr << "Error Creating Table" << endl;
-            sqlite3_close(DB);
-        }
-    }
-    catch (const exception &e)
+    // Open Database
+    rc = sqlite3_open(dir, &db);
+    if (rc)
     {
-        cerr << e.what();
+        std::cout << zErrMsg << endl;
+        return (0);
     }
-    sql = "CREATE TABLE IF NOT EXIST BOARDS(ID INTEGER PRIMARY KEY AUTOINCREMENT, DESC TEXT NOT NULL, LENGTH REAL NOT NULL, WIDTH REAL NOT NULL, THICKNESS REAL NOT NULL, COLOR TEXT NOT NULL, QUANTITY INT NOT NULL);";
-    try
+
+    // Create Units Table
+    sql = "CREATE TABLE UNITS("
+          "ID INTEGER PRIMARY KEY     NOT NULL,"
+          "DESC           TEXT    NOT NULL,"
+          "LENGTH         REAL     NOT NULL,"
+          "HEIGHT         REAL     NOT NULL,"
+          "DEPTH          REAL     NOT NULL,"
+          "COLOR          TEXT     NOT NULL,"
+          "QUANTITY       INTEGER  NOT NULL );";
+
+    rc = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
+    if (rc != SQLITE_OK)
     {
-        int exit = 0;
-        char *messageError;
-        exit = sqlite3_exec(DB, sql.c_str(), NULL, 0, &messageError);
-        if (exit != SQLITE_OK)
-        {
-            cerr << "Error Creating Table" << endl;
-            sqlite3_close(DB);
-        }
+        std::cout << zErrMsg << endl;
+        sqlite3_free(zErrMsg);
     }
-    catch (const exception &e)
+
+    // Create Cutting List Table
+    sql = "CREATE TABLE CUTTINGLIST("
+          "ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
+          "COLOR                             TEXT    NOT NULL,"
+          "DESC                             TEXT    NOT NULL,"
+          "PART                             TEXT    NOT NULL,"
+          "LENGTH                           REAL     NOT NULL,"
+          "WIDTH                            REAL     NOT NULL,"
+          "THICKNESS                        REAL     NOT NULL,"
+          "QUANTITY                         INTEGER  NOT NULL );";
+
+    rc = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
+    if (rc != SQLITE_OK)
     {
-        cerr << e.what();
+        std::cout << zErrMsg << endl;
+        sqlite3_free(zErrMsg);
     }
+
+    // Close Database
+    sqlite3_close(db);
     return 0;
 }
 
-static int insertData(const char *s)
+/*
+    Description:    Adds board dimensions to cutting list database
+    Input(s):       Unit Description, Overall Length, Overall Width, Overall Depth, Color, Quantity
+    Return:         None
+*/
+void StoreBoard(std::string DESC, std::string PART, BOARD A)
 {
-    sqlite3 *DB;
-    int exit = 0;
-    exit = sqlite3_open(s, &DB);
-    sqlite3_close(DB);
-    return 0;
+    sqlite3 *db;
+    int rc;
+    char *zErrMsg = 0;
+
+    // Open Database
+    rc = sqlite3_open(dir, &db);
+    if (rc)
+    {
+        std::cout << zErrMsg << endl;
+        return;
+    }
+    std::string sql = "INSERT INTO CUTTINGLIST (DESC, PART, LENGTH, WIDTH, THICKNESS, QUANTITY, COLOR) VALUES ('";
+    sql.append(DESC);
+    sql.append("','");
+    sql.append(PART);
+    sql.append("',");
+    sql.append(to_string(A.L));
+    sql.append(",");
+    sql.append(to_string(A.W));
+    sql.append(",");
+    sql.append(to_string(A.t));
+    sql.append(",");
+    sql.append(to_string(A.amount));
+    sql.append(",'");
+    sql.append(A.material);
+    sql.append("');");
+
+    // Insert Data
+    rc = sqlite3_exec(db, sql.c_str(), callback, 0, &zErrMsg);
+
+    if (rc != SQLITE_OK)
+    {
+        std::cout << zErrMsg << endl;
+        sqlite3_free(zErrMsg);
+    }
+    sqlite3_close(db);
 }
 
-static int selectUnits(const char *s)
+/*
+    Description:    Adds unit to unit list database
+    Input(s):       Unit Description, Overall Length, Overall Width, Overall Depth, Color, Quantity
+    Return:         None
+*/
+void StoreUnit(std::string DESC, float L, float H, float D, std::string COLOR, int qty)
 {
-    sqlite3 *DB;
-    int exit = sqlite3_open(s, &DB);
-    std::string sql = "SELECT * FROM UNITS;";
+    sqlite3 *db;
+    int rc;
+    char *zErrMsg = 0;
 
-    exit = sqlite3_exec(DB, sql.c_str(), callback, NULL, NULL);
+    // Open Database
+    rc = sqlite3_open(dir, &db);
+    if (rc)
+    {
+        std::cout << zErrMsg << endl;
+        return;
+    }
 
-    sqlite3_close(DB);
-    return 0;
+    // Formulate SQL Query
+    std::string sql = "INSERT INTO UNITS (DESC, LENGTH, HEIGHT, DEPTH, QUANTITY, COLOR) VALUES ('";
+    sql.append(DESC);
+    sql.append("',");
+    sql.append(to_string(L));
+    sql.append(",");
+    sql.append(to_string(H));
+    sql.append(",");
+    sql.append(to_string(D));
+    sql.append(",");
+    sql.append(to_string(qty));
+    sql.append(",'");
+    sql.append(COLOR);
+    sql.append("');");
+
+    //Insert Data
+    rc = sqlite3_exec(db, sql.c_str(), callback, 0, &zErrMsg);
+    if (rc != SQLITE_OK)
+    {
+        std::cout << zErrMsg << endl;
+        sqlite3_free(zErrMsg);
+    }
+    sqlite3_close(db);
 }
 
 static int callback(void *NotUsed, int argc, char **argv, char **azColName)
 {
-    for (int i = 0; i < argc; i++)
+    int i;
+    for (i = 0; i < argc; i++)
     {
-        cout << azColName[i] << "\t" << argv[i] << endl;
+        printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
     }
-    cout << endl;
+    printf("\n");
     return 0;
 }
 

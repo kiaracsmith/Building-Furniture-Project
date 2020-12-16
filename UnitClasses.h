@@ -10,7 +10,7 @@ const char *dir = "./db/test.db";
 class BOARD
 {
 public:
-    int L, W, t;
+    float L, W, t;
     std::string material;
     int amount;
     /*
@@ -36,12 +36,13 @@ public:
 };
 
 void BoardPrint(std::string NAME, BOARD A);
-void FloorUnit(int W, int H, int D, int t, std::string color, int n, int drawOpt);
-static int createDB(const char *s);
-static int createTable(const char *s);
-static int insertData(const char *s);
-static int callback(void* NotUsed, int argc, char** argv, char** azColName);
-static int selectUnits(const char *s);
+void FloorUnit(float W, float H, float D, int t, std::string color, int n, int drawOpt);
+static int createDB();
+static int createTable();
+static int callback(void *NotUsed, int argc, char **argv, char **azColName);
+void StoreBoard(std::string DESC, std::string PART, BOARD A);
+void StoreUnit(std::string DESC, float L, float H, float D, std::string COLOR, int qty);
+
 
 
 #endif // UNITCLASSES_H_INCLUDED
