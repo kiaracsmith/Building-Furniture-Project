@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wxsmith>
+	<object class="wxFrame" name="CuttingListFrame">
+		<size>565,525</size>
+		<bg>wxSYS_COLOUR_WINDOW</bg>
+		<pos_arg>1</pos_arg>
+		<size_arg>1</size_arg>
+		<object class="wxBoxSizer" variable="BoxSizer1" member="no">
+			<object class="sizeritem">
+				<object class="wxGrid" name="ID_GRID1" variable="Grid1" member="yes">
+					<cols>6</cols>
+					<rows>2</rows>
+					<collabels>
+						<item>Part</item>
+						<item>Length</item>
+						<item>Width</item>
+						<item>Thickness</item>
+						<item>Color</item>
+						<item>Quantity</item>
+					</collabels>
+					<size>567,225</size>
+				</object>
+				<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+				<border>5</border>
+				<option>1</option>
+			</object>
+		</object>
+	</object>
+</wxsmith>

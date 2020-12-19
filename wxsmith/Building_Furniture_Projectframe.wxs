@@ -4,7 +4,6 @@
 		<size>767,312</size>
 		<bg>wxSYS_COLOUR_WINDOW</bg>
 		<id_arg>0</id_arg>
-		<style>wxDEFAULT_FRAME_STYLE|wxRESIZE_BORDER|wxMAXIMIZE_BOX</style>
 		<handler function="OnClose" entry="EVT_CLOSE" />
 		<object class="wxStaticBox" name="ID_STATICBOX3" variable="StaticBox3" member="yes">
 			<label>Preview</label>
@@ -84,25 +83,26 @@
 			<size>-1,290</size>
 		</object>
 		<object class="wxButton" name="ID_BUTTON2" variable="Button2" member="yes">
-			<label>Cutting List</label>
-			<pos>288,280</pos>
+			<label>Show Cutting List</label>
+			<pos>280,280</pos>
 			<size>248,23</size>
+			<handler function="OnButton2Click" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxButton" name="ID_BUTTON4" variable="Button4" member="yes">
 			<label>Clear</label>
-			<pos>552,280</pos>
+			<pos>624,280</pos>
 			<handler function="OnButton4Click" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxButton" name="ID_BUTTON5" variable="Button5" member="yes">
-			<label>-</label>
-			<pos>640,280</pos>
-			<size>32,23</size>
+			<label>Remove</label>
+			<pos>544,280</pos>
+			<size>64,23</size>
 			<handler function="OnButton5Click" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxListView" name="ID_LISTVIEW1" variable="ListView1" member="yes">
 			<pos>296,32</pos>
 			<size>450,224</size>
-			<style>wxLC_REPORT|wxLC_ALIGN_LEFT|wxVSCROLL</style>
+			<style>wxLC_REPORT|wxLC_ALIGN_LEFT|wxVSCROLL|wxALWAYS_SHOW_SB</style>
 		</object>
 	</object>
 </wxsmith>

@@ -1,10 +1,10 @@
 # depslib dependency file v1.0
-1607973251 source:e:\programming\c++\building-furniture-project\building_furniture_projectapp.cpp
+1608389615 source:e:\programming\c++\building-furniture-project\building_furniture_projectapp.cpp
 	"Building_Furniture_ProjectApp.h"
 	"Building_Furniture_ProjectMain.h"
 	<wx/image.h>
 
-1608299538 e:\programming\c++\building-furniture-project\building_furniture_projectapp.h
+1608375295 e:\programming\c++\building-furniture-project\building_furniture_projectapp.h
 	<wx/app.h>
 
 1595438406 e:\programs\wxwidgets\include\wx\app.h
@@ -1500,7 +1500,8 @@
 1595438406 e:\programs\wxwidgets\include\wx\univ\theme.h
 	"wx/string.h"
 
-1608367956 e:\programming\c++\building-furniture-project\building_furniture_projectmain.h
+1608393427 e:\programming\c++\building-furniture-project\building_furniture_projectmain.h
+	"Constants.h"
 	<wx/button.h>
 	<wx/choice.h>
 	<wx/frame.h>
@@ -1938,7 +1939,7 @@
 
 1595438406 e:\programs\wxwidgets\include\wx\qt\stattext.h
 
-1584205418 source:e:\programming\c++\building-furniture-project\resource.rc
+1608375295 source:e:\programming\c++\building-furniture-project\resource.rc
 	"wx/msw/wx.rc"
 
 1595438406 e:\programs\wxwidgets\include\wx\msw\wx.rc
@@ -1947,13 +1948,14 @@
 
 1595438406 e:\programs\wxwidgets\include\wx\msw\rcdefs.h
 
-1608365285 source:e:\programming\c++\building-furniture-project\building_furniture_projectmain.cpp
+1608394377 source:e:\programming\c++\building-furniture-project\building_furniture_projectmain.cpp
 	<wx/msgdlg.h>
 	<string>
 	<iostream>
-	"Building_Furniture_ProjectMain.h"
-	"UnitClasses.h"
 	"sqlite/sqlite3.h"
+	"Building_Furniture_ProjectMain.h"
+	"CuttingListFrame.h"
+	"Constants.h"
 	<wx/intl.h>
 	<wx/settings.h>
 	<wx/string.h>
@@ -2028,12 +2030,10 @@
 1595438406 e:\programs\wxwidgets\include\wx\qt\msgdlg.h
 	"wx/msgdlg.h"
 
-1608361812 e:\programming\c++\building-furniture-project\unitclasses.h
+1608388402 e:\programming\c++\building-furniture-project\unitclasses.h
 	<string>
 	<iostream>
-	<string>
-	<fstream>
-	"Building_Furniture_ProjectMain.h"
+	"Constants.h"
 
 1595438406 e:\programs\wxwidgets\include\wx\htmllbox.h
 	"wx/defs.h"
@@ -2403,4 +2403,108 @@
 	<unicode/ubrk.h>
 	<unicode/utf16.h>
 	<math.h>
+
+1608396306 e:\programming\c++\building-furniture-project\cuttinglistframe.h
+	<wx/frame.h>
+	<wx/grid.h>
+	<wx/menu.h>
+	<string>
+	<iostream>
+
+1608394475 source:e:\programming\c++\building-furniture-project\cuttinglistframe.cpp
+	"CuttingListFrame.h"
+	<wx/intl.h>
+	<wx/settings.h>
+	<wx/string.h>
+	<string>
+	<iostream>
+	"sqlite/sqlite3.h"
+	"Constants.h"
+	"Building_Furniture_ProjectMain.h"
+
+1608390114 e:\programming\c++\building-furniture-project\constants.h
+	<string>
+
+1595438406 e:\programs\wxwidgets\include\wx\sizer.h
+	"wx/defs.h"
+	"wx/window.h"
+
+1595438406 e:\programs\wxwidgets\include\wx\menu.h
+	"wx/defs.h"
+	"wx/list.h"
+	"wx/window.h"
+	"wx/menuitem.h"
+	"wx/univ/menu.h"
+	"wx/msw/menu.h"
+	"wx/motif/menu.h"
+	"wx/gtk/menu.h"
+	"wx/gtk1/menu.h"
+	"wx/osx/menu.h"
+	"wx/qt/menu.h"
+
+1595438406 e:\programs\wxwidgets\include\wx\menuitem.h
+	"wx/defs.h"
+	"wx/object.h"
+	"wx/windowid.h"
+	"wx/univ/menuitem.h"
+	"wx/msw/menuitem.h"
+	"wx/motif/menuitem.h"
+	"wx/gtk/menuitem.h"
+	"wx/gtk1/menuitem.h"
+	"wx/osx/menuitem.h"
+	"wx/qt/menuitem.h"
+
+1595438406 e:\programs\wxwidgets\include\wx\univ\menuitem.h
+
+1595438406 e:\programs\wxwidgets\include\wx\msw\menuitem.h
+	"wx/bitmap.h"
+	"wx/ownerdrw.h"
+
+1595438406 e:\programs\wxwidgets\include\wx\ownerdrw.h
+	"wx/defs.h"
+	"wx/font.h"
+	"wx/colour.h"
+	"wx/msw/ownerdrw.h"
+
+1595438406 e:\programs\wxwidgets\include\wx\msw\ownerdrw.h
+
+1595438406 e:\programs\wxwidgets\include\wx\motif\menuitem.h
+	"wx/bitmap.h"
+
+1595438406 e:\programs\wxwidgets\include\wx\gtk\menuitem.h
+	"wx/bitmap.h"
+
+1595438406 e:\programs\wxwidgets\include\wx\gtk1\menuitem.h
+	"wx/bitmap.h"
+
+1595438406 e:\programs\wxwidgets\include\wx\osx\menuitem.h
+	"wx/defs.h"
+	"wx/bitmap.h"
+
+1595438406 e:\programs\wxwidgets\include\wx\qt\menuitem.h
+	"wx/menuitem.h"
+	"wx/bitmap.h"
+
+1595438406 e:\programs\wxwidgets\include\wx\univ\menu.h
+	"wx/accel.h"
+	"wx/dynarray.h"
+
+1595438406 e:\programs\wxwidgets\include\wx\msw\menu.h
+	"wx/accel.h"
+	"wx/dynarray.h"
+	"wx/arrstr.h"
+
+1595438406 e:\programs\wxwidgets\include\wx\motif\menu.h
+	"wx/colour.h"
+	"wx/font.h"
+	"wx/arrstr.h"
+
+1595438406 e:\programs\wxwidgets\include\wx\gtk\menu.h
+
+1595438406 e:\programs\wxwidgets\include\wx\gtk1\menu.h
+
+1595438406 e:\programs\wxwidgets\include\wx\osx\menu.h
+	"wx/arrstr.h"
+
+1595438406 e:\programs\wxwidgets\include\wx\qt\menu.h
 

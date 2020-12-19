@@ -88,12 +88,9 @@
 		<Unit filename="Building_Furniture_ProjectApp.h" />
 		<Unit filename="Building_Furniture_ProjectMain.cpp" />
 		<Unit filename="Building_Furniture_ProjectMain.h" />
-		<Unit filename="UnitClasses.cpp">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="UnitClasses.h">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
+		<Unit filename="Constants.h" />
+		<Unit filename="CuttingListFrame.cpp" />
+		<Unit filename="CuttingListFrame.h" />
 		<Unit filename="resource.rc">
 			<Option compilerVar="WINDRES" />
 		</Unit>
@@ -101,6 +98,8 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="wxsmith/Building_Furniture_Projectframe.wxs" />
+		<Unit filename="wxsmith/CuttingList.wxs" />
+		<Unit filename="wxsmith/CuttingListFrame.wxs" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 			<wxsmith version="1">

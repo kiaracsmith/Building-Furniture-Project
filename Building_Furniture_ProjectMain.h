@@ -9,6 +9,7 @@
 
 #ifndef BUILDING_FURNITURE_PROJECTMAIN_H
 #define BUILDING_FURNITURE_PROJECTMAIN_H
+#include "Constants.h"
 
 //(*Headers(Building_Furniture_ProjectFrame)
 #include <wx/button.h>
@@ -38,7 +39,8 @@ private:
     void OnListBox1Select(wxCommandEvent &event);
     void OnListView1BeginDrag(wxListEvent &event);
     void ListUpdate();
-    void OnButton5Click(wxCommandEvent& event);
+    void OnButton5Click(wxCommandEvent &event);
+    void OnButton2Click(wxCommandEvent &event);
     //*)
     //(*Identifiers(Building_Furniture_ProjectFrame)
     static const long ID_STATICBOX3;
@@ -86,5 +88,119 @@ private:
 
     DECLARE_EVENT_TABLE()
 };
+
+
+/*
+=================================================================================
+                                Classes
+=================================================================================
+*/
+/*
+Title: Preview Class
+Description: Class that defines the linked list that is shown on the Preview Window.
+*/
+class PREV
+{
+public:
+    typedef struct node
+    {
+        std::string a; //Part
+        float b;       //Length
+        float c;       //Width
+        float d;       //Thickness
+
+        node *next;
+    } * nodePtr;
+    nodePtr head;
+    nodePtr current;
+    nodePtr temp;
+
+    List()
+    {
+        head = NULL;
+        current = NULL;
+        temp = NULL;
+        return 0;
+    }
+
+    void AddNode(std::string a, float b, float c, float d)
+    {
+        nodePtr n = new node;
+        n->next = NULL;
+
+        n->a = a;
+        n->b = b;
+        n->c = c;
+        n->d = d;
+
+        if (head != NULL)
+        {
+            current = head;
+            while (current->next != NULL)
+            {
+                current = current->next;
+            }
+            current->next = n;
+        }
+        else
+        {
+            head = n;
+        }
+    }
+
+    void PrintList()
+    {
+        current = head;
+        while (current != NULL)
+        {
+            std::cout << current->a << "\t";
+            std::cout << std::to_string(current->b) << "\t";
+            std::cout << std::to_string(current->c) << "\t";
+            std::cout << std::to_string(current->d) << "\n";
+            current = current->next;
+        }
+        std::cout << std::endl;
+    }
+
+    void DeleteAllNodes()
+    {
+        if (head != NULL)
+        {
+            temp = head->next;
+            while (temp != NULL)
+            {
+                head->next = temp->next;
+                temp->next = NULL;
+                free(temp);
+                temp = head->next;
+            }
+        }
+    }
+};
+
+/*
+=================================================================================
+                                Varaible Constants
+=================================================================================
+*/
+
+
+/*
+=================================================================================
+                                Function Handlers
+=================================================================================
+*/
+std::string roundFunc(float a);
+void BoardPrint(std::string NAME, BOARD A);
+void StoreBoard(std::string DESC, std::string PART, BOARD A);
+void StoreUnit(std::string DESC, float L, float H, float D, std::string COLOR, int qty);
+std::string FloorUnit(float W, float H, float D, int t, std::string color, int n, int drawOpt);
+static int createDB();
+static int createTable();
+static int callback(void *NotUsed, int argc, char **argv, char **azColName);
+static int cbListUpdate(void *NotUsed, int argc, char **argv, char **azColName);
+
+
+//Database Function Handlers
 
 #endif // BUILDING_FURNITURE_PROJECTMAIN_H
