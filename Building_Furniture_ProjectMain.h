@@ -38,8 +38,7 @@ private:
     void OnListBox1Select(wxCommandEvent &event);
     void OnListView1BeginDrag(wxListEvent &event);
     void ListUpdate();
-
-
+    void OnButton5Click(wxCommandEvent& event);
     //*)
     //(*Identifiers(Building_Furniture_ProjectFrame)
     static const long ID_STATICBOX3;
@@ -58,7 +57,6 @@ private:
     static const long ID_STATICTEXT5;
     static const long ID_STATICLINE1;
     static const long ID_BUTTON2;
-    static const long ID_BUTTON3;
     static const long ID_BUTTON4;
     static const long ID_BUTTON5;
     static const long ID_LISTVIEW1;
@@ -67,7 +65,6 @@ private:
     //(*Declarations(Building_Furniture_ProjectFrame)
     wxButton* Button1;
     wxButton* Button2;
-    wxButton* Button3;
     wxButton* Button4;
     wxButton* Button5;
     wxChoice* Choice1;

@@ -88,24 +88,21 @@
 			<pos>288,280</pos>
 			<size>248,23</size>
 		</object>
-		<object class="wxButton" name="ID_BUTTON3" variable="Button3" member="yes">
-			<label>Save Session</label>
-			<pos>296,232</pos>
-		</object>
 		<object class="wxButton" name="ID_BUTTON4" variable="Button4" member="yes">
 			<label>Clear</label>
-			<pos>400,232</pos>
+			<pos>552,280</pos>
 			<handler function="OnButton4Click" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxButton" name="ID_BUTTON5" variable="Button5" member="yes">
 			<label>-</label>
-			<pos>488,232</pos>
+			<pos>640,280</pos>
 			<size>32,23</size>
+			<handler function="OnButton5Click" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxListView" name="ID_LISTVIEW1" variable="ListView1" member="yes">
 			<pos>296,32</pos>
-			<size>456,192</size>
-			<style>wxLC_LIST|wxLC_ALIGN_LEFT</style>
+			<size>456,224</size>
+			<style>wxLC_LIST|wxLC_ALIGN_LEFT|wxVSCROLL</style>
 		</object>
 	</object>
 </wxsmith>
