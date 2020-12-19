@@ -7,10 +7,10 @@
  * License:
  **************************************************************/
 
-#include "Building_Furniture_ProjectMain.h"
 #include <wx/msgdlg.h>
 #include <string>
 #include <iostream>
+#include "Building_Furniture_ProjectMain.h"
 #include "UnitClasses.h"
 #include "sqlite/sqlite3.h"
 using namespace std;
@@ -69,8 +69,8 @@ const long Building_Furniture_ProjectFrame::ID_STATICLINE1 = wxNewId();
 const long Building_Furniture_ProjectFrame::ID_BUTTON2 = wxNewId();
 const long Building_Furniture_ProjectFrame::ID_BUTTON3 = wxNewId();
 const long Building_Furniture_ProjectFrame::ID_BUTTON4 = wxNewId();
-const long Building_Furniture_ProjectFrame::ID_LISTBOX1 = wxNewId();
 const long Building_Furniture_ProjectFrame::ID_BUTTON5 = wxNewId();
+const long Building_Furniture_ProjectFrame::ID_LISTVIEW1 = wxNewId();
 //*)
 
 BEGIN_EVENT_TABLE(Building_Furniture_ProjectFrame, wxFrame)
@@ -88,9 +88,9 @@ Building_Furniture_ProjectFrame::Building_Furniture_ProjectFrame(wxWindow *paren
 {
     //(*Initialize(Building_Furniture_ProjectFrame)
     Create(parent, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE | wxRESIZE_BORDER | wxMAXIMIZE_BOX, _T("wxID_ANY"));
-    SetClientSize(wxSize(552, 312));
+    SetClientSize(wxSize(777, 312));
     SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOW));
-    StaticBox3 = new wxStaticBox(this, ID_STATICBOX3, _("Preview"), wxPoint(280, 8), wxSize(256, 264), 0, _T("ID_STATICBOX3"));
+    StaticBox3 = new wxStaticBox(this, ID_STATICBOX3, _("Preview"), wxPoint(280, 8), wxSize(488, 264), 0, _T("ID_STATICBOX3"));
     StaticBox1 = new wxStaticBox(this, ID_STATICBOX1, _("Design"), wxPoint(8, 8), wxSize(256, 96), 0, _T("ID_STATICBOX1"));
     Button1 = new wxButton(this, ID_BUTTON1, _("Submit"), wxPoint(8, 280), wxSize(256, 23), 0, wxDefaultValidator, _T("ID_BUTTON1"));
     Button1->Disable();
@@ -113,8 +113,8 @@ Building_Furniture_ProjectFrame::Building_Furniture_ProjectFrame(wxWindow *paren
     Button2 = new wxButton(this, ID_BUTTON2, _("Cutting List"), wxPoint(288, 280), wxSize(248, 23), 0, wxDefaultValidator, _T("ID_BUTTON2"));
     Button3 = new wxButton(this, ID_BUTTON3, _("Save Session"), wxPoint(296, 232), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON3"));
     Button4 = new wxButton(this, ID_BUTTON4, _("Clear"), wxPoint(400, 232), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON4"));
-    ListBox1 = new wxListBox(this, ID_LISTBOX1, wxPoint(296, 32), wxSize(224, 192), 0, 0, 0, wxDefaultValidator, _T("ID_LISTBOX1"));
     Button5 = new wxButton(this, ID_BUTTON5, _("-"), wxPoint(488, 232), wxSize(32, 23), 0, wxDefaultValidator, _T("ID_BUTTON5"));
+    ListView1 = new wxListView(this, ID_LISTVIEW1, wxPoint(296, 32), wxSize(456, 192), wxLC_LIST | wxLC_ALIGN_LEFT, wxDefaultValidator, _T("ID_LISTVIEW1"));
 
     Connect(ID_BUTTON1, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&Building_Furniture_ProjectFrame::OnButton1Click);
     Connect(ID_CHOICE1, wxEVT_COMMAND_CHOICE_SELECTED, (wxObjectEventFunction)&Building_Furniture_ProjectFrame::OnChoice1Select);
@@ -124,6 +124,8 @@ Building_Furniture_ProjectFrame::Building_Furniture_ProjectFrame(wxWindow *paren
     //*)
     createDB();
     createTable();
+    PreviewWindow.AddNode("First", 0, 0, 0);
+    ListUpdate();
 }
 
 Building_Furniture_ProjectFrame::~Building_Furniture_ProjectFrame()
@@ -151,8 +153,12 @@ void Building_Furniture_ProjectFrame::OnSpinCtrl1Change(wxSpinEvent &event)
 {
 }
 
+/*
+    Description: Add to List Button
+    */
 void Building_Furniture_ProjectFrame::OnButton1Click(wxCommandEvent &event)
 {
+
     // Valiables
     // - Dimensions
     int H = SpinCtrl1->GetValue();
@@ -162,13 +168,8 @@ void Building_Furniture_ProjectFrame::OnButton1Click(wxCommandEvent &event)
     int qty = 1;
     std::string color = "White";
 
-    // - Database Query
-    sqlite3 *db;
-    char *zErrMsg = 0;
-    int rc;
-    char *sql;
-
     // - Command Definition
+    std::string ID = "";
 
     int UnitSelect = (int)Choice1->GetSelection();
     int UnitType = (int)Choice2->GetSelection();
@@ -179,27 +180,18 @@ void Building_Furniture_ProjectFrame::OnButton1Click(wxCommandEvent &event)
         return;
     }
 
-    rc = sqlite3_open(dir, &db);
-    if (rc)
-    {
-        std::cout << zErrMsg << endl;
-        return;
-    }
-    else
-    {
-        cout << "Opened database successfully" << endl;
-    }
     switch (UnitSelect)
     {
     case 0:
     {
         //Floor Unit
-        FloorUnit(W, H, D, t, color, 1, UnitType);
+        ID = FloorUnit(W, H, D, t, color, 1, UnitType);
         break;
     }
     default:
         break;
     }
+    ListUpdate();
 }
 
 void Building_Furniture_ProjectFrame::OnChoice1Select(wxCommandEvent &event)
@@ -226,9 +218,44 @@ void Building_Furniture_ProjectFrame::OnChoice1Select(wxCommandEvent &event)
     }
 }
 
+/*
+    Description: Remove All Button
+    */
 void Building_Furniture_ProjectFrame::OnButton4Click(wxCommandEvent &event)
 {
-    ListBox1->Clear();
+    // Variable Initilization
+    sqlite3 *db;
+    char *zErrMsg = 0;
+    int rc;
+    char *sql;
+    const char *data = "Callback function called";
+
+    // Open Database
+    rc = sqlite3_open(dir, &db);
+    if (rc)
+    {
+        std::cout << zErrMsg << endl;
+        return;
+    }
+    sql = "DELETE from 'UNITS'; ";
+    rc = sqlite3_exec(db, sql, callback, (void *)data, &zErrMsg);
+    if (rc != SQLITE_OK)
+    {
+        cout << zErrMsg << endl;
+        sqlite3_free(zErrMsg);
+    }
+    sql = "DELETE from 'CUTTINGLIST'; ";
+    rc = sqlite3_exec(db, sql, callback, (void *)data, &zErrMsg);
+    if (rc != SQLITE_OK)
+    {
+        cout << zErrMsg << endl;
+        sqlite3_free(zErrMsg);
+    }
+    ListUpdate();
+}
+
+void Building_Furniture_ProjectFrame::OnListBox1Select(wxCommandEvent &event)
+{
 }
 
 /*
@@ -237,7 +264,7 @@ void Building_Furniture_ProjectFrame::OnButton4Click(wxCommandEvent &event)
 =================================================================================
 */
 
-void FloorUnit(float W, float H, float D, int t, std::string color, int n, int drawOpt)
+std::string FloorUnit(float W, float H, float D, int t, std::string color, int n, int drawOpt)
 {
     int x = 0, y = 0, z = 0;
     int grvBacking = 6;
@@ -330,13 +357,13 @@ void FloorUnit(float W, float H, float D, int t, std::string color, int n, int d
     }
 
     StoreUnit(NAME, W, H, D, color, n);
-
     StoreBoard(NAME, "SIDE", SIDE);
     StoreBoard(NAME, "BASE", BASE);
     StoreBoard(NAME, "SIDE", SUPPORT);
     StoreBoard(NAME, "BACKING", BACKING);
     StoreBoard(NAME, "DOOR", DOOR);
     StoreBoard(NAME, "SHELF", SHELF);
+    return NAME;
 }
 
 /*
@@ -464,6 +491,7 @@ void StoreBoard(std::string DESC, std::string PART, BOARD A)
         sqlite3_free(zErrMsg);
     }
     sqlite3_close(db);
+    return;
 }
 
 /*
@@ -508,21 +536,166 @@ void StoreUnit(std::string DESC, float L, float H, float D, std::string COLOR, i
         sqlite3_free(zErrMsg);
     }
     sqlite3_close(db);
+    return;
 }
 
+/*
+    Description:    Returns Query of database select
+    Input(s):
+    Return:         None
+*/
 static int callback(void *NotUsed, int argc, char **argv, char **azColName)
 {
-    int i;
-    for (i = 0; i < argc; i++)
-    {
-        printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
-    }
-    printf("\n");
+    cout << argv[1] << endl; //DESC
+    cout << argv[2] << endl; //LENGTH
+    cout << argv[3] << endl; //HEIGHT
+    cout << argv[4] << endl; //DEPTH
+
     return 0;
 }
 
 /*
 =================================================================================
-                                Other
+                                GUI Functions
 =================================================================================
 */
+
+PREV::List()
+{
+    head = NULL;
+    current = NULL;
+    temp = NULL;
+}
+
+void PREV::AddNode(std::string a, float b, float c, float d)
+{
+    nodePtr n = new node;
+    n->next = NULL;
+
+    n->a = a;
+    n->b = b;
+    n->c = c;
+    n->d = d;
+
+    if (head != NULL)
+    {
+        current = head;
+        while (current->next != NULL)
+        {
+            current = current->next;
+        }
+        current->next = n;
+    }
+    else
+    {
+        head = n;
+    }
+}
+
+void PREV::DeleteNode(std::string delData)
+{
+    nodePtr delPtr = NULL;
+    temp = head;
+    current = head;
+    while ((current != NULL) && (current->a != delData))
+    {
+        temp = current;
+        current = current->next;
+    }
+    if (current == NULL)
+    {
+        cout << delData << " Not Found\n";
+        delete delPtr;
+    }
+    else
+    {
+        delPtr = current;
+        current = current->next;
+        temp->next = current;
+        delete delPtr;
+    }
+}
+
+void PREV::DeleteAllNodes()
+{
+    if (head != NULL)
+    {
+        temp = head->next;
+        while (temp != NULL)
+        {
+            head->next = temp->next;
+            temp->next = NULL;
+            free(temp);
+            temp = head->next;
+        }
+    }
+}
+
+void PREV::PrintList()
+{
+    current = head;
+    while (current != NULL)
+    {
+        cout << current->a << "\t";
+        cout << std::to_string(current->b) << "\t";
+        cout << std::to_string(current->c) << "\t";
+        cout << std::to_string(current->d) << "\n";
+        current = current->next;
+    }
+    cout << endl;
+}
+
+void Building_Furniture_ProjectFrame::ListUpdate()
+{
+    sqlite3 *db;
+    char *zErrMsg = 0;
+    int rc;
+    const char *data = "Callback function called";
+
+    // Open Database
+    rc = sqlite3_open(dir, &db);
+    if (rc)
+    {
+        std::cout << zErrMsg << endl;
+        return;
+    }
+    std::string sql = "SELECT * FROM 'UNITS'";
+
+    // Insert Data
+    PreviewWindow.DeleteAllNodes();
+    ListView1->DeleteAllItems();
+
+    rc = sqlite3_exec(db, sql.c_str(), cbListUpdate, 0, &zErrMsg);
+
+    if (rc != SQLITE_OK)
+    {
+        std::cout << zErrMsg << endl;
+        sqlite3_free(zErrMsg);
+    }
+
+    PreviewWindow.current = PreviewWindow.head;
+    while (PreviewWindow.current != NULL)
+    {
+        if (PreviewWindow.current != PreviewWindow.head)
+        {
+            ListView1->InsertItem(0, PreviewWindow.current->a);
+        }
+        PreviewWindow.current = PreviewWindow.current->next;
+    }
+    sqlite3_close(db);
+    return;
+}
+
+/*
+    Description:    Returns Query of database select
+    Input(s):
+    Return:         None
+*/
+static int cbListUpdate(void *NotUsed, int argc, char **argv, char **azColName)
+{
+    float b = atof(argv[2]);
+    float c = atof(argv[3]);
+    float d = atof(argv[4]);
+    PreviewWindow.AddNode(argv[1], b, c, d);
+    return 0;
+}

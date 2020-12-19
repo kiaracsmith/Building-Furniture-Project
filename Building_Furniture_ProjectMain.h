@@ -14,7 +14,7 @@
 #include <wx/button.h>
 #include <wx/choice.h>
 #include <wx/frame.h>
-#include <wx/listbox.h>
+#include <wx/listctrl.h>
 #include <wx/spinctrl.h>
 #include <wx/statbox.h>
 #include <wx/statline.h>
@@ -34,9 +34,13 @@ private:
     void OnButton1Click(wxCommandEvent &event);
     void OnSpinCtrl1Change(wxSpinEvent &event);
     void OnChoice1Select(wxCommandEvent &event);
-    void OnButton4Click(wxCommandEvent& event);
-    //*)
+    void OnButton4Click(wxCommandEvent &event);
+    void OnListBox1Select(wxCommandEvent &event);
+    void OnListView1BeginDrag(wxListEvent &event);
+    void ListUpdate();
 
+
+    //*)
     //(*Identifiers(Building_Furniture_ProjectFrame)
     static const long ID_STATICBOX3;
     static const long ID_STATICBOX1;
@@ -56,8 +60,8 @@ private:
     static const long ID_BUTTON2;
     static const long ID_BUTTON3;
     static const long ID_BUTTON4;
-    static const long ID_LISTBOX1;
     static const long ID_BUTTON5;
+    static const long ID_LISTVIEW1;
     //*)
 
     //(*Declarations(Building_Furniture_ProjectFrame)
@@ -68,7 +72,7 @@ private:
     wxButton* Button5;
     wxChoice* Choice1;
     wxChoice* Choice2;
-    wxListBox* ListBox1;
+    wxListView* ListView1;
     wxSpinCtrl* SpinCtrl1;
     wxSpinCtrl* SpinCtrl2;
     wxSpinCtrl* SpinCtrl3;

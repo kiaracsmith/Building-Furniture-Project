@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <wxsmith>
 	<object class="wxFrame" name="Building_Furniture_ProjectFrame">
-		<size>552,312</size>
+		<size>777,312</size>
 		<bg>wxSYS_COLOUR_WINDOW</bg>
 		<id_arg>0</id_arg>
 		<style>wxDEFAULT_FRAME_STYLE|wxRESIZE_BORDER|wxMAXIMIZE_BOX</style>
@@ -9,7 +9,7 @@
 		<object class="wxStaticBox" name="ID_STATICBOX3" variable="StaticBox3" member="yes">
 			<label>Preview</label>
 			<pos>280,8</pos>
-			<size>256,264</size>
+			<size>488,264</size>
 		</object>
 		<object class="wxStaticBox" name="ID_STATICBOX1" variable="StaticBox1" member="yes">
 			<label>Design</label>
@@ -97,15 +97,15 @@
 			<pos>400,232</pos>
 			<handler function="OnButton4Click" entry="EVT_BUTTON" />
 		</object>
-		<object class="wxListBox" name="ID_LISTBOX1" variable="ListBox1" member="yes">
-			<default>-1</default>
-			<pos>296,32</pos>
-			<size>224,192</size>
-		</object>
 		<object class="wxButton" name="ID_BUTTON5" variable="Button5" member="yes">
 			<label>-</label>
 			<pos>488,232</pos>
 			<size>32,23</size>
+		</object>
+		<object class="wxListView" name="ID_LISTVIEW1" variable="ListView1" member="yes">
+			<pos>296,32</pos>
+			<size>456,192</size>
+			<style>wxLC_LIST|wxLC_ALIGN_LEFT</style>
 		</object>
 	</object>
 </wxsmith>
