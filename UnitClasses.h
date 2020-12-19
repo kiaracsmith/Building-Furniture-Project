@@ -47,12 +47,13 @@ Description: Class that defines the linked list that is shown on the Preview Win
 class PREV
 {
 public:
+
     typedef struct node
     {
         std::string a;
-        float b;
-        float c;
-        float d;
+        float b;  //Width
+        float c;  //Depth
+        float d;  //Height
         node *next;
     } * nodePtr;
     nodePtr head;
@@ -84,6 +85,12 @@ static int createTable();
 //Database Query Handlers
 static int callback(void *NotUsed, int argc, char **argv, char **azColName);
 static int cbListUpdate(void *NotUsed, int argc, char **argv, char **azColName);
+
+//Other Functions
+std::string roundFunc(float a);
+
 PREV PreviewWindow;
+
+
 
 #endif // UNITCLASSES_H_INCLUDED
