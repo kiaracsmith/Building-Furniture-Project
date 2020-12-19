@@ -88,42 +88,41 @@ Building_Furniture_ProjectFrame::Building_Furniture_ProjectFrame(wxWindow *paren
 {
     //(*Initialize(Building_Furniture_ProjectFrame)
     Create(parent, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE, _T("wxID_ANY"));
-    SetClientSize(wxSize(767,312));
+    SetClientSize(wxSize(767, 312));
     SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOW));
-    StaticBox3 = new wxStaticBox(this, ID_STATICBOX3, _("Preview"), wxPoint(280,8), wxSize(480,264), 0, _T("ID_STATICBOX3"));
-    StaticBox1 = new wxStaticBox(this, ID_STATICBOX1, _("Design"), wxPoint(8,8), wxSize(256,96), 0, _T("ID_STATICBOX1"));
-    Button1 = new wxButton(this, ID_BUTTON1, _("Submit"), wxPoint(8,280), wxSize(256,23), 0, wxDefaultValidator, _T("ID_BUTTON1"));
+    StaticBox3 = new wxStaticBox(this, ID_STATICBOX3, _("Preview"), wxPoint(280, 8), wxSize(480, 264), 0, _T("ID_STATICBOX3"));
+    StaticBox1 = new wxStaticBox(this, ID_STATICBOX1, _("Design"), wxPoint(8, 8), wxSize(256, 96), 0, _T("ID_STATICBOX1"));
+    Button1 = new wxButton(this, ID_BUTTON1, _("Submit"), wxPoint(8, 280), wxSize(256, 23), 0, wxDefaultValidator, _T("ID_BUTTON1"));
     Button1->Disable();
-    StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _("Unit"), wxPoint(24,40), wxDefaultSize, 0, _T("ID_STATICTEXT1"));
-    Choice1 = new wxChoice(this, ID_CHOICE1, wxPoint(72,32), wxSize(170,23), 0, 0, 0, wxDefaultValidator, _T("ID_CHOICE1"));
+    StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _("Unit"), wxPoint(24, 40), wxDefaultSize, 0, _T("ID_STATICTEXT1"));
+    Choice1 = new wxChoice(this, ID_CHOICE1, wxPoint(72, 32), wxSize(170, 23), 0, 0, 0, wxDefaultValidator, _T("ID_CHOICE1"));
     Choice1->Append(_("Floor Unit"));
-    Choice2 = new wxChoice(this, ID_CHOICE2, wxPoint(72,64), wxSize(170,23), 0, 0, 0, wxDefaultValidator, _T("ID_CHOICE2"));
-    StaticText2 = new wxStaticText(this, ID_STATICTEXT2, _("Type"), wxPoint(24,72), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
-    StaticBox2 = new wxStaticBox(this, ID_STATICBOX2, _("Dimensions [mm]"), wxPoint(8,120), wxSize(256,152), 0, _T("ID_STATICBOX2"));
-    StaticText3 = new wxStaticText(this, ID_STATICTEXT3, _("Width"), wxPoint(24,152), wxDefaultSize, 0, _T("ID_STATICTEXT3"));
-    StaticText4 = new wxStaticText(this, ID_STATICTEXT4, _("Height"), wxPoint(24,184), wxDefaultSize, 0, _T("ID_STATICTEXT4"));
-    SpinCtrl1 = new wxSpinCtrl(this, ID_SPINCTRL1, _T("500"), wxPoint(72,144), wxSize(170,23), 0, 0, 10000, 500, _T("ID_SPINCTRL1"));
+    Choice2 = new wxChoice(this, ID_CHOICE2, wxPoint(72, 64), wxSize(170, 23), 0, 0, 0, wxDefaultValidator, _T("ID_CHOICE2"));
+    StaticText2 = new wxStaticText(this, ID_STATICTEXT2, _("Type"), wxPoint(24, 72), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
+    StaticBox2 = new wxStaticBox(this, ID_STATICBOX2, _("Dimensions [mm]"), wxPoint(8, 120), wxSize(256, 152), 0, _T("ID_STATICBOX2"));
+    StaticText3 = new wxStaticText(this, ID_STATICTEXT3, _("Width"), wxPoint(24, 152), wxDefaultSize, 0, _T("ID_STATICTEXT3"));
+    StaticText4 = new wxStaticText(this, ID_STATICTEXT4, _("Height"), wxPoint(24, 184), wxDefaultSize, 0, _T("ID_STATICTEXT4"));
+    SpinCtrl1 = new wxSpinCtrl(this, ID_SPINCTRL1, _T("500"), wxPoint(72, 144), wxSize(170, 23), 0, 0, 10000, 500, _T("ID_SPINCTRL1"));
     SpinCtrl1->SetValue(_T("500"));
-    SpinCtrl2 = new wxSpinCtrl(this, ID_SPINCTRL2, _T("700"), wxPoint(72,176), wxSize(170,23), 0, 0, 10000, 700, _T("ID_SPINCTRL2"));
+    SpinCtrl2 = new wxSpinCtrl(this, ID_SPINCTRL2, _T("700"), wxPoint(72, 176), wxSize(170, 23), 0, 0, 10000, 700, _T("ID_SPINCTRL2"));
     SpinCtrl2->SetValue(_T("700"));
-    SpinCtrl3 = new wxSpinCtrl(this, ID_SPINCTRL3, _T("560"), wxPoint(72,208), wxSize(170,23), 0, 0, 10000, 560, _T("ID_SPINCTRL3"));
+    SpinCtrl3 = new wxSpinCtrl(this, ID_SPINCTRL3, _T("560"), wxPoint(72, 208), wxSize(170, 23), 0, 0, 10000, 560, _T("ID_SPINCTRL3"));
     SpinCtrl3->SetValue(_T("560"));
-    StaticText5 = new wxStaticText(this, ID_STATICTEXT5, _("Depth"), wxPoint(24,216), wxDefaultSize, 0, _T("ID_STATICTEXT5"));
-    StaticLine1 = new wxStaticLine(this, ID_STATICLINE1, wxPoint(272,8), wxSize(-1,290), wxLI_HORIZONTAL, _T("ID_STATICLINE1"));
-    Button2 = new wxButton(this, ID_BUTTON2, _("Show Cutting List"), wxPoint(280,280), wxSize(248,23), 0, wxDefaultValidator, _T("ID_BUTTON2"));
-    Button4 = new wxButton(this, ID_BUTTON4, _("Clear"), wxPoint(624,280), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON4"));
-    Button5 = new wxButton(this, ID_BUTTON5, _("Remove"), wxPoint(544,280), wxSize(64,23), 0, wxDefaultValidator, _T("ID_BUTTON5"));
-    ListView1 = new wxListView(this, ID_LISTVIEW1, wxPoint(296,32), wxSize(450,224), wxLC_REPORT|wxLC_ALIGN_LEFT|wxVSCROLL|wxALWAYS_SHOW_SB, wxDefaultValidator, _T("ID_LISTVIEW1"));
+    StaticText5 = new wxStaticText(this, ID_STATICTEXT5, _("Depth"), wxPoint(24, 216), wxDefaultSize, 0, _T("ID_STATICTEXT5"));
+    StaticLine1 = new wxStaticLine(this, ID_STATICLINE1, wxPoint(272, 8), wxSize(-1, 290), wxLI_HORIZONTAL, _T("ID_STATICLINE1"));
+    Button2 = new wxButton(this, ID_BUTTON2, _("Show Cutting List"), wxPoint(280, 280), wxSize(248, 23), 0, wxDefaultValidator, _T("ID_BUTTON2"));
+    Button4 = new wxButton(this, ID_BUTTON4, _("Clear"), wxPoint(624, 280), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON4"));
+    Button5 = new wxButton(this, ID_BUTTON5, _("Remove"), wxPoint(544, 280), wxSize(64, 23), 0, wxDefaultValidator, _T("ID_BUTTON5"));
+    ListView1 = new wxListView(this, ID_LISTVIEW1, wxPoint(296, 32), wxSize(450, 224), wxLC_REPORT | wxLC_ALIGN_LEFT | wxVSCROLL | wxALWAYS_SHOW_SB, wxDefaultValidator, _T("ID_LISTVIEW1"));
 
-    Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&Building_Furniture_ProjectFrame::OnButton1Click);
-    Connect(ID_CHOICE1,wxEVT_COMMAND_CHOICE_SELECTED,(wxObjectEventFunction)&Building_Furniture_ProjectFrame::OnChoice1Select);
-    Connect(ID_SPINCTRL1,wxEVT_COMMAND_SPINCTRL_UPDATED,(wxObjectEventFunction)&Building_Furniture_ProjectFrame::OnSpinCtrl1Change);
-    Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&Building_Furniture_ProjectFrame::OnButton2Click);
-    Connect(ID_BUTTON4,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&Building_Furniture_ProjectFrame::OnButton4Click);
-    Connect(ID_BUTTON5,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&Building_Furniture_ProjectFrame::OnButton5Click);
-    Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&Building_Furniture_ProjectFrame::OnClose);
+    Connect(ID_BUTTON1, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&Building_Furniture_ProjectFrame::OnButton1Click);
+    Connect(ID_CHOICE1, wxEVT_COMMAND_CHOICE_SELECTED, (wxObjectEventFunction)&Building_Furniture_ProjectFrame::OnChoice1Select);
+    Connect(ID_SPINCTRL1, wxEVT_COMMAND_SPINCTRL_UPDATED, (wxObjectEventFunction)&Building_Furniture_ProjectFrame::OnSpinCtrl1Change);
+    Connect(ID_BUTTON2, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&Building_Furniture_ProjectFrame::OnButton2Click);
+    Connect(ID_BUTTON4, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&Building_Furniture_ProjectFrame::OnButton4Click);
+    Connect(ID_BUTTON5, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&Building_Furniture_ProjectFrame::OnButton5Click);
+    Connect(wxID_ANY, wxEVT_CLOSE_WINDOW, (wxObjectEventFunction)&Building_Furniture_ProjectFrame::OnClose);
     //*)
-
 
     ListView1->InsertColumn(0, _("Description"), 0, 280);
     ListView1->InsertColumn(1, _("Width"), 0, 50);

@@ -2404,20 +2404,23 @@
 	<unicode/utf16.h>
 	<math.h>
 
-1608396306 e:\programming\c++\building-furniture-project\cuttinglistframe.h
+1608398190 e:\programming\c++\building-furniture-project\cuttinglistframe.h
+	<wx/filedlg.h>
 	<wx/frame.h>
 	<wx/grid.h>
 	<wx/menu.h>
+	<wx/textfile.h>
 	<string>
 	<iostream>
 
-1608394475 source:e:\programming\c++\building-furniture-project\cuttinglistframe.cpp
+1608397498 source:e:\programming\c++\building-furniture-project\cuttinglistframe.cpp
 	"CuttingListFrame.h"
 	<wx/intl.h>
 	<wx/settings.h>
 	<wx/string.h>
 	<string>
 	<iostream>
+	<fstream>
 	"sqlite/sqlite3.h"
 	"Constants.h"
 	"Building_Furniture_ProjectMain.h"
@@ -2507,4 +2510,61 @@
 	"wx/arrstr.h"
 
 1595438406 e:\programs\wxwidgets\include\wx\qt\menu.h
+
+1595438406 e:\programs\wxwidgets\include\wx\filedlg.h
+	"wx/defs.h"
+	"wx/dialog.h"
+	"wx/arrstr.h"
+	"wx/generic/filedlgg.h"
+	"wx/msw/filedlg.h"
+	"wx/motif/filedlg.h"
+	"wx/gtk/filedlg.h"
+	"wx/gtk1/filedlg.h"
+	"wx/osx/filedlg.h"
+	"wx/qt/filedlg.h"
+
+1595438406 e:\programs\wxwidgets\include\wx\generic\filedlgg.h
+	"wx/listctrl.h"
+	"wx/datetime.h"
+	"wx/filefn.h"
+	"wx/artprov.h"
+	"wx/filedlg.h"
+	"wx/generic/filectrlg.h"
+
+1595438406 e:\programs\wxwidgets\include\wx\artprov.h
+	"wx/string.h"
+	"wx/bitmap.h"
+	"wx/icon.h"
+	"wx/iconbndl.h"
+
+1595438406 e:\programs\wxwidgets\include\wx\generic\filectrlg.h
+	"wx/containr.h"
+	"wx/listctrl.h"
+	"wx/filectrl.h"
+	"wx/filename.h"
+
+1595438406 e:\programs\wxwidgets\include\wx\filectrl.h
+	"wx/defs.h"
+	"wx/string.h"
+	"wx/event.h"
+	"wx/gtk/filectrl.h"
+	"wx/generic/filectrlg.h"
+
+1595438406 e:\programs\wxwidgets\include\wx\gtk\filectrl.h
+	"wx/control.h"
+	"wx/filectrl.h"
+
+1595438406 e:\programs\wxwidgets\include\wx\msw\filedlg.h
+
+1595438406 e:\programs\wxwidgets\include\wx\motif\filedlg.h
+
+1595438406 e:\programs\wxwidgets\include\wx\gtk\filedlg.h
+	"wx/gtk/filectrl.h"
+
+1595438406 e:\programs\wxwidgets\include\wx\gtk1\filedlg.h
+	"wx/generic/filedlgg.h"
+
+1595438406 e:\programs\wxwidgets\include\wx\osx\filedlg.h
+
+1595438406 e:\programs\wxwidgets\include\wx\qt\filedlg.h
 

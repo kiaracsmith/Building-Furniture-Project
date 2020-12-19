@@ -7,7 +7,7 @@
 #include <wx/grid.h>
 #include <wx/menu.h>
 //*)
-
+#include <wx/textfile.h>
 #include <string>
 #include <iostream>
 

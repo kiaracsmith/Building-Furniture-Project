@@ -8,6 +8,7 @@
 
 #include <string>
 #include <iostream>
+#include <fstream>
 #include "sqlite/sqlite3.h"
 #include "Constants.h"
 #include "Building_Furniture_ProjectMain.h"
@@ -32,7 +33,7 @@ CuttingListFrame::CuttingListFrame(wxWindow *parent, wxWindowID id, const wxPoin
 	SetClientSize(wxSize(540,673));
 	SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOW));
 	Grid1 = new wxGrid(this, ID_GRID1, wxPoint(0,0), wxSize(540,584), wxBORDER_DOUBLE|wxVSCROLL|wxALWAYS_SHOW_SB, _T("ID_GRID1"));
-	Grid1->CreateGrid(2,6);
+	Grid1->CreateGrid(100,6);
 	Grid1->EnableEditing(true);
 	Grid1->EnableGridLines(true);
 	Grid1->SetRowLabelSize(40);
@@ -55,9 +56,10 @@ CuttingListFrame::CuttingListFrame(wxWindow *parent, wxWindowID id, const wxPoin
 	Menu2->Append(MenuItem1);
 	MenuItem2 = new wxMenuItem(Menu2, PDF1, _("PDF"), wxEmptyString, wxITEM_NORMAL);
 	Menu2->Append(MenuItem2);
+	MenuItem2->Enable(false);
 	MenuBar1->Append(Menu2, _("Export"));
 	SetMenuBar(MenuBar1);
-	FileDialog1 = new wxFileDialog(this, _("Select file"), wxEmptyString, wxEmptyString, wxFileSelectorDefaultWildcardStr, wxFD_DEFAULT_STYLE, wxDefaultPosition, wxDefaultSize, _T("wxFileDialog"));
+	FileDialog1 = new wxFileDialog(this, _("Select file"), wxEmptyString, wxEmptyString, wxFileSelectorDefaultWildcardStr, wxFD_CHANGE_DIR, wxDefaultPosition, wxDefaultSize, _T("wxFileDialog"));
 	//*)
 
 	Connect(REFRESH_ID1, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&CuttingListFrame::REFRESHBUTTON);
@@ -78,7 +80,41 @@ void CuttingListFrame::REFRESHBUTTON(wxCommandEvent &event)
 }
 void CuttingListFrame::CSV_Export(wxCommandEvent &event)
 {
-	UpdateList();
+	int result = FileDialog1->ShowModal();
+	if (result == wxID_OK)
+	{
+		std::ofstream f;
+		std::string text = "";
+
+		f.open(FileDialog1->GetFilename().ToStdString());
+
+		CutListWindow.current = CutListWindow.head;
+		while (CutListWindow.current != NULL)
+		{
+			if (CutListWindow.current != CutListWindow.head)
+			{
+				text = CutListWindow.current->a;
+				text.append(",");
+				text.append(roundFunc(CutListWindow.current->b));
+				text.append(",");
+				text.append(roundFunc(CutListWindow.current->c));
+				text.append(",");
+				text.append(roundFunc(CutListWindow.current->d));
+				text.append(",");
+				text.append(CutListWindow.current->e);
+				text.append(",");
+				text.append(roundFunc(CutListWindow.current->f));
+				text.append("\n");
+			}
+			else
+			{
+				text = "Part, Length, Width, Thickness, Color, Quantity\n";
+			}
+			f << text;
+			CutListWindow.current = CutListWindow.current->next;
+		}
+		f.close();
+	}
 }
 void CuttingListFrame::PDF_Export(wxCommandEvent &event)
 {
@@ -122,7 +158,6 @@ void CuttingListFrame::UpdateList()
 	{
 		if (CutListWindow.current != CutListWindow.head)
 		{
-			Grid1->AppendRows(index, 1);
 			Grid1->SetCellValue(index, 0, CutListWindow.current->a);
 			Grid1->SetCellValue(index, 1, roundFunc(CutListWindow.current->b));
 			Grid1->SetCellValue(index, 2, roundFunc(CutListWindow.current->c));
@@ -133,6 +168,7 @@ void CuttingListFrame::UpdateList()
 		}
 		CutListWindow.current = CutListWindow.current->next;
 	}
+	sqlite3_close(db);
 }
 
 /*

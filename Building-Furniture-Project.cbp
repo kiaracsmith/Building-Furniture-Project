@@ -100,12 +100,14 @@
 		<Unit filename="wxsmith/Building_Furniture_Projectframe.wxs" />
 		<Unit filename="wxsmith/CuttingList.wxs" />
 		<Unit filename="wxsmith/CuttingListFrame.wxs" />
+		<Unit filename="wxsmith/CuttingListFrame1.wxs" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 			<wxsmith version="1">
 				<gui name="wxWidgets" src="Building_Furniture_ProjectApp.cpp" main="Building_Furniture_ProjectFrame" init_handlers="necessary" language="CPP" />
 				<resources>
 					<wxFrame wxs="wxsmith/Building_Furniture_Projectframe.wxs" src="Building_Furniture_ProjectMain.cpp" hdr="Building_Furniture_ProjectMain.h" fwddecl="0" i18n="1" name="Building_Furniture_ProjectFrame" language="CPP" />
+					<wxFrame wxs="wxsmith/CuttingListFrame1.wxs" src="CuttingListFrame.cpp" hdr="CuttingListFrame.h" fwddecl="0" i18n="1" name="CuttingListFrame" language="CPP" />
 				</resources>
 			</wxsmith>
 		</Extensions>

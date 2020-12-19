@@ -6,7 +6,7 @@
 		<id_arg>0</id_arg>
 		<object class="wxGrid" name="ID_GRID1" variable="Grid1" member="yes">
 			<cols>6</cols>
-			<rows>2</rows>
+			<rows>100</rows>
 			<labelcolwidth>40</labelcolwidth>
 			<defaultcolsize>80</defaultcolsize>
 			<collabels>
@@ -35,11 +35,13 @@
 				</object>
 				<object class="wxMenuItem" name="PDF1" variable="MenuItem2" member="yes">
 					<label>PDF</label>
+					<enabled>0</enabled>
 				</object>
 			</object>
 		</object>
 		<object class="wxFileDialog" variable="FileDialog1" member="yes">
 			<message>Select file</message>
+			<style>wxFD_CHANGE_DIR</style>
 		</object>
 	</object>
 </wxsmith>
