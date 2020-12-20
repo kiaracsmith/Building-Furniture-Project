@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wxsmith>
+	<object class="wxFrame" name="CuttingListFrame">
+		<size>540,673</size>
+		<bg>wxSYS_COLOUR_WINDOW</bg>
+		<id_arg>0</id_arg>
+		<object class="wxGrid" name="ID_GRID1" variable="Grid1" member="yes">
+			<cols>6</cols>
+			<rows>100</rows>
+			<labelcolwidth>40</labelcolwidth>
+			<defaultcolsize>80</defaultcolsize>
+			<collabels>
+				<item>Part</item>
+				<item>Length</item>
+				<item>Width</item>
+				<item>Thickness</item>
+				<item>Color</item>
+				<item>Quantity</item>
+			</collabels>
+			<pos>0,0</pos>
+			<size>540,584</size>
+			<style>wxBORDER_DOUBLE|wxVSCROLL|wxALWAYS_SHOW_SB</style>
+		</object>
+		<object class="wxMenuBar" variable="MenuBar1" member="yes">
+			<object class="wxMenu" variable="Menu1" member="yes">
+				<label>Refresh</label>
+				<object class="wxMenuItem" name="REFRESH_ID1" variable="MenuItem3" member="yes">
+					<label>Refresh</label>
+				</object>
+			</object>
+			<object class="wxMenu" variable="Menu2" member="yes">
+				<label>Export</label>
+				<object class="wxMenuItem" name="CSV1" variable="MenuItem1" member="yes">
+					<label>CSV</label>
+				</object>
+				<object class="wxMenuItem" name="PDF1" variable="MenuItem2" member="yes">
+					<label>PDF</label>
+					<enabled>0</enabled>
+				</object>
+			</object>
+		</object>
+		<object class="wxFileDialog" variable="FileDialog1" member="yes">
+			<message>Select file</message>
+			<style>wxFD_CHANGE_DIR</style>
+		</object>
+	</object>
+</wxsmith>

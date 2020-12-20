@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wxsmith>
+	<object class="wxFrame" name="CuttingList">
+		<size>747,464</size>
+		<object class="wxGrid" name="ID_GRID1" variable="Grid1" member="yes">
+			<cols>6</cols>
+			<collabels>
+				<item>Part</item>
+				<item>Length</item>
+				<item>Width</item>
+				<item>Thickness</item>
+				<item>Color</item>
+				<item>Quantity</item>
+			</collabels>
+			<pos>0,0</pos>
+			<size>744,416</size>
+			<handler function="OnGrid1CellLeftClick" entry="EVT_CMD_GRID_CELL_LEFT_CLICK" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON1" variable="Button1" member="yes">
+			<label>Refresh</label>
+			<pos>8,432</pos>
+			<handler function="OnButton1Click" entry="EVT_BUTTON" />
+		</object>
+	</object>
+</wxsmith>
